@@ -100,6 +100,15 @@ out="$(FOREMAN_EXPECT_M=FIX-1 _emit_turn_guard "$d" "$h0" "$(head_of "$d")" "$tm
 assert_contains "$out" "m_mismatch=1" "FIX1.md under expect_m=FIX-1 -> m_mismatch=1 (string match, no normalization)"
 assert_contains "$out" "[foreman][GUARD][M_MISMATCH]" "m_mismatch prints a loud stderr marker"
 
+# --- 8b. task-prefixed report name COUNTS under the default glob ---
+# (regression: the inherited default '[MF]*.md' silently missed <task>-M1.md,
+#  no-opping reports_changed/m_mismatch out of the box; caught by live smoke 2026-07-06)
+d="$(mkrepo)"; tm="$(mkmark "$d")"; h0="$(head_of "$d")"
+addcommit "$d" m1
+touch "$d/tmp/codex_reports/foreman-smoke-M1.md"
+out="$(_emit_turn_guard "$d" "$h0" "$(head_of "$d")" "$tm" 1 2>&1)"
+assert_contains "$out" "reports_changed=1" "task-prefixed report counts under default glob"
+
 # --- 8. no expect_m set -> mismatch machinery stays off ---
 d="$(mkrepo)"; tm="$(mkmark "$d")"; h0="$(head_of "$d")"
 addcommit "$d" m1

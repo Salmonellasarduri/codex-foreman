@@ -24,7 +24,7 @@
 #      FOREMAN_EXPECT_REPORTS  expected report-file delta per turn (default 1)
 #      FOREMAN_EXPECT_M        the single milestone id allowed this turn; echoed as
 #                              expect_m= and string-matched against changed report names
-#      FOREMAN_RPT_GLOB        report glob under tmp/codex_reports (default '[MF]*.md')
+#      FOREMAN_RPT_GLOB        report glob under tmp/codex_reports (default '*.md')
 #      FOREMAN_CODEX_RETRIES   outage retry budget per turn (default 8)
 #      FOREMAN_WT_PREFIX       optional worktree dir prefix for the task<->worktree
 #                              name check (e.g. 'ap-' if worktrees are ap-<task>)
@@ -40,7 +40,12 @@ set +e
 
 USAGE="usage: foreman.sh <task> {exec <wt> <pf|-> [schema] | resume <wt> <pf|-> [schema] | digest [N] [repo] | report <Mn> [repo]}"
 
-FOREMAN_RPT_GLOB_DEFAULT='[MF]*.md'
+# 2026-07-06: default was '[MF]*.md' (inherited from the source project); it silently
+# missed task-prefixed report names like <task>-M1.md -- the very naming the brief
+# template mandates -- so reports_changed/m_mismatch no-opped out of the box (caught
+# by the first live smoke turn). The reports dir is dedicated (turn.* state files are
+# .last/.jsonl), so '*.md' is safe.
+FOREMAN_RPT_GLOB_DEFAULT='*.md'
 FOREMAN_EXPECT_REPORTS_DEFAULT=1
 
 _emit_turn_guard() {

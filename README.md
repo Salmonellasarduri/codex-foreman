@@ -96,7 +96,7 @@ all retries continue that thread.
 |---|---|---|
 | `FOREMAN_EXPECT_M` | *(unset)* | the single milestone id allowed this turn |
 | `FOREMAN_EXPECT_REPORTS` | `1` | expected report-file delta per turn |
-| `FOREMAN_RPT_GLOB` | `[MF]*.md` | report glob under `tmp/codex_reports` |
+| `FOREMAN_RPT_GLOB` | `*.md` | report glob under `tmp/codex_reports` |
 | `FOREMAN_CODEX_RETRIES` | `8` | outage retry budget per turn |
 | `FOREMAN_WT` | `$PWD` | repo for `digest` / `report` |
 | `FOREMAN_WT_PREFIX` | *(none)* | worktree dir prefix for the task↔worktree name check |
@@ -142,7 +142,7 @@ Windows-specific.
 bash tests/turn_guard_test.sh
 ```
 
-17 assertions over throwaway git repos, covering every guard status — the
+18 assertions over throwaway git repos, covering every guard status — the
 must-flag sides (`history_rewritten`, `over_run`, `m_mismatch`) and the
 near-miss pass sides that must NOT flag.
 
