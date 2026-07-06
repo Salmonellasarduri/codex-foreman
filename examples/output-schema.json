@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "foreman turn report",
+  "description": "Structured per-turn report a Codex worker returns via `codex exec --output-schema`. One object per turn. Keep summaries ASCII for cross-tool safety.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["phase", "milestone", "committed_count", "summary", "files", "tests", "risks", "questions", "blocked_on", "done"],
+  "properties": {
+    "phase": {
+      "type": "string",
+      "enum": ["plan", "result"],
+      "description": "plan = approach proposed, awaiting manager ACK before implementing (high-stakes M). result = implemented this turn."
+    },
+    "milestone": {
+      "type": "string",
+      "description": "Milestone id, e.g. M3.2 / F5. Exactly ONE milestone id; a turn covering multiple milestones is a contract violation (1 turn = 1 M)."
+    },
+    "committed_count": {
+      "type": "integer",
+      "description": "Number of git commits this turn created. 0 for phase:plan. The manager cross-checks this against the guard line's new_commits (git-as-truth)."
+    },
+    "summary": {
+      "type": "string",
+      "description": "1-5 lines. What this turn did (result) or proposes (plan)."
+    },
+    "files": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paths touched (result) or to be touched (plan)."
+    },
+    "tests": {
+      "type": "string",
+      "description": "Test command + pass/fail counts for result; empty for plan."
+    },
+    "risks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Risks / things the manager should double-check (long-tail correctness, wiring, world-state)."
+    },
+    "questions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Open questions for the manager. Empty if none. If this is empty every turn, the worker is hiding assumptions."
+    },
+    "blocked_on": {
+      "type": "string",
+      "description": "MUST-STOP reason (real-device / external post / billing / source-of-truth change / out-of-roadmap design call), else empty."
+    },
+    "done": {
+      "type": "boolean",
+      "description": "true ONLY if the result is wired to a production caller AND tested AND self-verified (tests green != wired)."
+    }
+  }
+}
