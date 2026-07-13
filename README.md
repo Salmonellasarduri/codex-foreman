@@ -1,5 +1,7 @@
 # codex-foreman
 
+[![CI](https://github.com/Salmonellasarduri/codex-foreman/actions/workflows/ci.yml/badge.svg)](https://github.com/Salmonellasarduri/codex-foreman/actions/workflows/ci.yml)
+
 Drive a headless [Codex CLI](https://github.com/openai/codex) worker through a
 multi-milestone roadmap, one **machine-verified** turn at a time.
 
