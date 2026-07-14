@@ -1,0 +1,38 @@
+name: Bug report
+description: Report a reproducible foreman, worktree, guard, or retry problem
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: Sanitize transcripts and paths. Report security issues privately through the security link.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Release tag or commit SHA
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, shell version, git version, and `codex --version`
+    validations:
+      required: true
+  - type: input
+    id: guard
+    attributes:
+      label: Sanitized guard line
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Minimal steps that reproduce the problem
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true

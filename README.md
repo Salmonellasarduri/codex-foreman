@@ -5,6 +5,11 @@
 Drive a headless [Codex CLI](https://github.com/openai/codex) worker through a
 multi-milestone roadmap, one **machine-verified** turn at a time.
 
+Use the [latest GitHub release](https://github.com/Salmonellasarduri/codex-foreman/releases/latest)
+for a stable snapshot. During the `v0.x` series, guard fields and operating
+contracts may change between minor releases; check the release notes before
+updating manager automation.
+
 `foreman.sh` wraps `codex exec` / `codex exec resume` for a *manager* — Claude
 Code, another LLM harness, or a human in a terminal — that treats the worker's
 self-report as a claim, not a fact. After every turn it emits one guard line
@@ -137,6 +142,14 @@ rotation, completion-criteria patterns, known landmines — is in
 `bash` + `git` + an authenticated `codex` CLI. No other dependencies.
 Developed and used on Windows under Git Bash; nothing here is
 Windows-specific.
+
+Confirm the worker is available with `codex --version`. Clone or unpack a
+release, make `foreman.sh` and `worktree.sh` executable, then either invoke
+them by absolute path or place symlinks to them in a directory on `PATH`:
+
+```bash
+chmod +x foreman.sh worktree.sh
+```
 
 ## Tests
 
